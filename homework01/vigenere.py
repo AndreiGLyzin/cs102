@@ -10,6 +10,21 @@ def encrypt_vigenere(plaintext, keyword):
     'LXFOPVEFRNHR'
     """
     # PUT YOUR CODE HERE
+    ciphertext = ''
+    step = 0
+    for s in plaintext:
+        if ('A' <= s <= 'Z') or ('a' <= s <= 'z'):
+            if 'A' <= s <= 'Z':
+                ss = ord(s) + ord(keyword[step % len(keyword)]) - ord('A')
+                if chr(ss) > 'Z':
+                    ss -= 26
+            else:
+                ss = ord(s) + ord(keyword[step % len(keyword)]) - ord('a')
+                if chr(ss) > 'z':
+                    ss -= 26
+        else:
+            ciphertext += s
+        step += 1
     return ciphertext
 
 
