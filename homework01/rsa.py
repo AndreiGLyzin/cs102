@@ -30,11 +30,8 @@ def gcd(a, b):
     1
     """
     # PUT YOUR CODE HERE
-    while a != b:
-        if a > b:
-            a = a - b
-        else:
-            b = b - a
+    while b != 0:
+        a, b = b, a % b
     return a
 
 
@@ -47,7 +44,18 @@ def multiplicative_inverse(e, phi):
     23
     """
     # PUT YOUR CODE HERE
-    pass
+    i = 0
+    a = phi
+    cel = []
+    while (a % e != 0):
+        cel.append(a // e)
+        a, e = e, a % e
+        i += 1
+    x, y = 0, 1
+    while i > 0:
+        x, y = y, x - (y * cel[i - 1])
+        i -= 1
+    return y % phi
 
 
 def generate_keypair(p, q):
