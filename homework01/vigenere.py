@@ -22,6 +22,7 @@ def encrypt_vigenere(plaintext, keyword):
                 ss = ord(s) + ord(keyword[step % len(keyword)]) - ord('a')
                 if chr(ss) > 'z':
                     ss -= 26
+            ciphertext += chr(ss)
         else:
             ciphertext += s
         step += 1
