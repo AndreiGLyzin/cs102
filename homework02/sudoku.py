@@ -1,3 +1,4 @@
+import random
 from typing import Tuple, List, Set, Optional
 
 
@@ -182,7 +183,15 @@ def generate_sudoku(N: int) -> List[List[str]]:
     >>> check_solution(solution)
     True
     """
-    pass
+    grid = solve([['.'] * 9 for _ in range(9)])
+    N = 81 - min(81, max(0, N))
+    while N:
+        x = random.randint(0, 8)
+        y = random.randint(0, 8)
+        if grid[x][y] != '.':
+            grid[x][y] = '.'
+            N -= 1
+    return grid
 
 if __name__ == '__main__':
     for fname in ['puzzle1.txt', 'puzzle2.txt', 'puzzle3.txt']:
