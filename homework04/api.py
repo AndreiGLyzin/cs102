@@ -1,6 +1,6 @@
 import requests
 import time
-
+import random
 import config
 
 
@@ -13,21 +13,21 @@ def zapr(url, params={}, timeout=5, max_retries=5, backoff_factor=0.3):
     :param max_retries: максимальное число повторных запросов
     :param backoff_factor: коэффициент экспоненциального нарастания задержки
     """
-    delay = timeout / 2
-    while True:
-        error = params
-        if not error:
-            # ok, got response
-            b = requests.get(url)
-            return b
-            break
+    max_delay = 3
+    jitter = 0.1
+    delay = 0.1
+    for retries in range(max_retries):
+        response = requests.get(url, timeout=timeout)
 
-        # error happened, pause between requests
+        if response.status_code == 200:
+            return response
+
         time.sleep(delay)
 
-        # calculate next delay
-        delay = min(delay * backoff_factor, timeout)
-        delay = delay + (delay * 0.1)
+        delay = min(delay * backoff_factor, max_delay)
+        delay = delay + random.randint(0, 5) * jitter
+
+    return response.raise_for_status()
     # PUT YOUR CODE HERE
 
 

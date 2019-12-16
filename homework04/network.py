@@ -14,6 +14,7 @@ def pol(user_id):
     query = f"{domain}/friends.get?access_token={access_token}&user_id={user_id}&fields={fields}&v={v}"
     response = zapr(query)
     ids = []
+    print(response.json())
     coun = response.json()['response']['count']
     for i in range(coun):
             ids.append(response.json()['response']['items'][i]['id'])
@@ -72,14 +73,14 @@ def get_network(users_ids): #ids друзей
     return newgrap #edges 0-83
 
 # Создание графа
+
 asd = pol(559574644)
 vertices = names(559574644)
 edges = get_network(asd)
-
 g = Graph(vertex_attrs={"label":vertices},
-    edges=edges, directed=False)
+          edges=edges, directed=False)
 
-# Задаем стиль отображения графа
+    # Задаем стиль отображения графа
 N = len(vertices)
 visual_style = {}
 visual_style["layout"] = g.layout_fruchterman_reingold(
@@ -89,9 +90,6 @@ visual_style["layout"] = g.layout_fruchterman_reingold(
 
 # Отрисовываем граф
 
-#g.simplify(multiple=True, loops=True)
-#def plot_graph(graph):
-    # PUT YOUR CODE HERE
 g.simplify(multiple=True, loops=True)
 
 communities = g.community_edge_betweenness(directed=False)
